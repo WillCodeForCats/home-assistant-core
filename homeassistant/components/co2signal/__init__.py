@@ -127,6 +127,8 @@ def get_data(hass: HomeAssistant, config: Mapping[str, Any]) -> CO2SignalRespons
             raise InvalidAuth from err
         if "API rate limit exceeded." in err_str:
             raise APIRatelimitExceeded from err
+        if "Invalid or missing JSON from API request." in err_str:
+            raise CO2Error from err
 
         _LOGGER.exception("Unexpected exception")
         raise UnknownError from err
